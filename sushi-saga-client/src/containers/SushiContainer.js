@@ -6,11 +6,9 @@ const SushiContainer = (props) => {
     <Fragment>
       <div className="belt">
         {
-          /* 
-             Render Sushi components here!
-          */
+          props.displaySushi()
         }
-        <MoreButton />
+        <MoreButton handleSushiRefresh={props.handleSushiRefresh} />
       </div>
     </Fragment>
   )
