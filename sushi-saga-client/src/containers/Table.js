@@ -16,6 +16,7 @@ const Table = (props) => {
       <div className="table">
         <div className="stack">
           {
+          
             /* 
                renderPlates takes an array 
                and renders an empty plate

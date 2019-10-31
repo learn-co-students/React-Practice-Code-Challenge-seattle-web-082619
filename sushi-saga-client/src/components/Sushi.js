@@ -1,13 +1,21 @@
 import React, { Fragment } from 'react'
 
+
 const Sushi = (props) => {
+
+let OnEat = () => {
+  props.handleEat(props.sushi.id)
+  // console.log(props.sushi.id)
+}
+
+
   return (
     <div className="sushi">
       <div className="plate" 
-           onClick={props.handleSushiEat}>
+           onClick={OnEat}>
         { 
          
-          props.sushi.beenEaten ? 
+          props.sushi.isEaten ? 
           null
           : 
           <img src={props.sushi.img_url} width="100%" />
