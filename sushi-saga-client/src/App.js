@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   handleEat = (id) => {
-     /// get the data structure you want and then from there set the new state 
+     /// get the data structure you want and then from there set the new state
     console.log("double clicked?")
     this.setState(previousState => {
       return {
@@ -54,22 +54,22 @@ class App extends Component {
     })
   }
 
-  addUniquePlate = (id) => {
-    // if id is not in the usedPlates array, add it.
-    let inArrr = false;
+  // addUniquePlate = (id) => {
+  //   // if id is not in the usedPlates array, add it.
+  //   let inArrr = false;
 
-    this.state.usedPlates.forEach((sushi)=>{
-      if (sushi.id === id) {
-        inArrr = true;
-      }
-    })
-    //TODO: finish this!!!
-    this.setState((previousState) => {
-      if (!inArrr) {
-        return previousState.usedPlates.push(sushi) //TODO
-      }
-    })    
-  }
+  //   this.state.usedPlates.forEach((sushi)=>{
+  //     if (sushi.id === id) {
+  //       inArrr = true;
+  //     }
+  //   })
+  //   //TODO: finish this!!!
+  //   this.setState((previousState) => {
+  //     if (!inArrr) {
+  //       return previousState.usedPlates.push(sushi) //TODO
+  //     }
+  //   })    
+  // }
 
   setIsEatenFalse = (rawSushi) => {
     return rawSushi.map((sushi) => {
