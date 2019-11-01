@@ -12,9 +12,8 @@ let OnEat = () => {
   return (
     <div className="sushi">
       <div className="plate" 
-           onClick={OnEat}>
-        { 
-         
+      onClick={OnEat}>
+        {  
           props.sushi.isEaten ? 
           null
           : 

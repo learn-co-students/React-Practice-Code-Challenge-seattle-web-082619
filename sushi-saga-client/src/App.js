@@ -16,6 +16,8 @@ class App extends Component {
       beltStart: 0,
       beltEnd: 4,
       usedPlates: [],
+      money: 100,
+
     }
     this.fetchSushi()
   }
@@ -30,7 +32,7 @@ class App extends Component {
   }
 
   handleSushiRefresh = () => {
-    this.setState((previousState)=> {
+    this.setState((previousState) => {
      let beltMovement = {beltStart: previousState.beltStart + 4,
       beltEnd: previousState.beltEnd + 4}
 
@@ -38,21 +40,44 @@ class App extends Component {
   })
   }
 
+
   handleEat = (id) => {
      /// get the data structure you want and then from there set the new state
-    console.log("double clicked?")
+    // console.log("double clicked?")
     this.setState(previousState => {
       return {
-       sushiArr: previousState.sushiArr.map(sushi =>{
+      sushiArr: previousState.sushiArr.map(sushi =>{
           if (sushi.id === id ){
-            sushi.isEaten = true;
-            this.addUniquePlate(id);
+            if (sushi.isEaten === false ){
+
+              let prevMoney = this.state.money
+
+              if ((prevMoney - sushi.price) >= 0){
+                sushi.isEaten = true;
+                this.addUniquePlate(id);
+                this.handleCostSubtraction(sushi);
+              } 
+            }            
           }
           return sushi;
         })
       }
     })
   }
+
+    addUniquePlate = (id) => {
+      this.setState({
+        usedPlates: [...this.state.usedPlates, id]
+      })
+    }
+
+    handleCostSubtraction =(sushi) => {
+      this.setState((previousState) => {
+          return {money: previousState.money - sushi.price}  
+        })  
+    }
+
+
 
   // addUniquePlate = (id) => {
   //   // if id is not in the usedPlates array, add it.
@@ -84,18 +109,16 @@ class App extends Component {
       return (
         slicedArr.map((sushi) => {          
           return <Sushi sushi={sushi} handleEat={this.handleEat} />
-        })
-        
+        }) 
       )
   }
 
   render() {
-    // console.log("hola")
     return (
       <div className="app">
         <SushiContainer displaySushi={this.displaySushi} handleSushiRefresh={this.handleSushiRefresh} />
 
-        <Table />
+        <Table usedPlates={this.state.usedPlates} money={this.state.money}  />
       </div>
     );
   }
