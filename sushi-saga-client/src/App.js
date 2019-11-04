@@ -64,8 +64,13 @@ class App extends Component {
       return {
         sushiData: previousState.sushiData.map(sushi =>{
           if (sushi.id === id){
-            sushi.isEaten = true;
-            if (this.haveEnoughMoney(sushi, id)){ 
+            
+            let currentMoney = this.state.money 
+
+            if ((currentMoney - sushi.price) >= 0){
+              sushi.isEaten = true;
+              this.uniqueUsedPlates(id);
+              this.costOfEating(sushi);
             }
           }
           return sushi;
@@ -74,13 +79,7 @@ class App extends Component {
     })
   }
 
-  haveEnoughMoney = (sushi, id) => {
-    if (this.state.money >= sushi.price){
-      this.uniqueUsedPlates(id);
-      this.costOfEating(sushi);
-    }
-  }
-
+ 
   uniqueUsedPlates = (id) => {
     // console.log("used plates trigger?, it did", id)
     this.setState({
