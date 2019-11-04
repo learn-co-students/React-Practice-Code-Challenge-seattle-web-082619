@@ -1,16 +1,25 @@
 import React, { Fragment } from 'react'
 
+
+
+
 const Sushi = (props) => {
+
+
+this.eatSushi = () => {
+  // console.log(props,"string");
+  props.handleEatSushi(props.sushi.id)
+}
+
   return (
     <div className="sushi">
       <div className="plate" 
-           onClick={/* Give me a callback! */ null}>
+           onClick={this.eatSushi}>
         { 
-          /* Tell me if this sushi has been eaten! */ 
-          true ?
-            null
-          :
-            <img src={ props.sushi.img_url } alt ={ "white rice with a slice of fish"}  width="100%" />
+          props.sushi.isEaten ? 
+          null
+          : 
+          <img src={props.sushi.img_url} width="100%" />
         }
       </div>
       <h4 className="sushi-details">

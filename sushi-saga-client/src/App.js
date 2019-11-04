@@ -14,7 +14,8 @@ class App extends Component {
       beltStart: 0,
       beltEnd: 4,
       usedPlates: [],
-      money: 100
+      money: 100,
+      isEaten: false, 
     }
     this.getAllSushi();
   }
@@ -39,9 +40,9 @@ class App extends Component {
 
   handleSushiRefresh = () => {
     this.setState((previousState) => {
-     let beltMovement = {beltStart: previousState.beltStart + 4,
+    let beltMovement = {beltStart: previousState.beltStart + 4,
       beltEnd: previousState.beltEnd + 4}
-      console.log("clicking on the button?")
+      // console.log("clicking on the button?")
       return beltMovement;
   })
   }
@@ -52,9 +53,47 @@ class App extends Component {
     const fourPieces = this.state.sushiData.slice(this.state.beltStart, this.state.beltEnd)
       return (
         fourPieces.map((sushi) => {
-          return <Sushi sushi= {sushi}/>
+          return <Sushi sushi= {sushi}  handleEatSushi={this.handleEatSushi} />
         })
       )
+  }
+
+  handleEatSushi = (id) => {
+    // console.log("clicked on the specific sushi") // modify state so that isEaten is true: 
+    this.setState(previousState => {
+      return {
+        sushiData: previousState.sushiData.map(sushi =>{
+          if (sushi.id === id){
+            sushi.isEaten = true;
+            if (this.haveEnoughMoney(sushi, id)){ 
+            }
+          }
+          return sushi;
+        })
+      }
+    })
+  }
+
+  haveEnoughMoney = (sushi, id) => {
+    if (this.state.money >= sushi.price){
+      this.uniqueUsedPlates(id);
+      this.costOfEating(sushi);
+    }
+  }
+
+  uniqueUsedPlates = (id) => {
+    // console.log("used plates trigger?, it did", id)
+    this.setState({
+      usedPlates: [...this.state.usedPlates, id]
+    })
+  }
+
+  costOfEating = (sushi) => {
+    // console.log("sushi!!!", sushi);
+    console.log(this.state.money)
+    this.setState((previousState) => {
+      return {money: previousState.money - sushi.price} 
+    })
   }
 
 
@@ -64,7 +103,7 @@ class App extends Component {
     return (
       <div className="app">
         <SushiContainer  displaySushi={this.displaySushi} handleSushiRefresh={this.handleSushiRefresh}  />
-        <Table />
+        <Table money={this.state.money} usedPlates={this.state.usedPlates}  />
       </div>
     );
   }
