@@ -7,10 +7,10 @@ const SushiContainer = (props) => {
       <div className="belt">
         {
           /* 
-             Render Sushi components here!
+            Render Sushi components here!
           */
         }
-        <MoreButton />
+        <MoreButton handleSushiRefresh = {props.handleSushiRefresh}/>
       </div>
     </Fragment>
   )
